@@ -41,30 +41,23 @@
       return {
         num: 1,
         loading: true,
-        items: this.$auth.loggedIn ? this.getTodoItems() : []
+        items: []
       }
     },
     mounted () {
       this.setTodoItems()
     },
     methods: {
-      async getTodoItems() {
-        try {
-          console.log(this.$auth.getToken('auth0'))
-          return await getTodos(this.$auth.getToken('auth0'));
-        }
-        catch(error) {
-          console.log(error)
-        }
-      },
       async setTodoItems() {
-        try {
-          console.log(this.$auth.getToken('auth0'))
-          this.items = await getTodos(this.$auth.getToken('auth0'));
-          this.loading = false;
-        }
-        catch(error) {
-          console.log(error)
+        if (this.$auth.loggedIn) {
+          try {
+            console.log(this.$auth.getToken('auth0'))
+            this.items = await getTodos(this.$auth.getToken('auth0'));
+            this.loading = false;
+          }
+          catch(error) {
+            console.log(error)
+          }
         }
       },
     },

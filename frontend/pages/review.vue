@@ -2,10 +2,18 @@
   <v-layout
     column
   >
-    <h1>Create a post</h1>
+    <h1>Create a post:</h1>
     <v-row justify="center">
       <v-col cols="12" sm="10" md="8" lg="6">
         <v-card ref="form">
+          <v-card-text>
+            <v-text-field
+              ref="caption"
+              label="Caption"
+              placeholder="Fresh, delicious sushi to go!"
+              required
+            ></v-text-field>
+          </v-card-text>
           <v-card-text>
             <v-text-field
               ref="name"
@@ -18,8 +26,8 @@
             <v-textarea
               outlined
               name="review"
-              label="Write a review"
-              placeholder="Fresh, delicious sushi to go..."
+              label="Your review"
+              placeholder=""
             ></v-textarea>
           </v-card-text>
           <v-card-text>
@@ -36,8 +44,10 @@
   </v-layout>
 </template>
 
-<!--
-            v-model="name"
-            :rules="[() => !!name || 'This field is required']"
-            :error-messages="errorMessages"
-            -->
+<style lang="scss" scoped>
+/*
+div {
+  background-image: url('../assets/img/background.jpeg');
+}
+*/
+</style>

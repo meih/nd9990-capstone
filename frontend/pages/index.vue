@@ -4,7 +4,7 @@
     justify-center
     align-center
   >
-  <h1>Found good food to go?  Let's share it!</h1>
+  <h1>Got good food to go?  Let's share it!</h1>
   <v-spacer></v-spacer>
     <v-flex
       xs12
@@ -47,4 +47,7 @@ export default {
 
 <style lang="scss" scoped>
 h1 { padding: 100px; }
+body {
+  background-image: linear-gradient(#123456, #654321);
+}
 </style>
