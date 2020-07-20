@@ -1,5 +1,5 @@
 service:
-  name: serverless-food-review-app
+  name: food-review-app
 
 plugins:
   - serverless-webpack
@@ -9,8 +9,8 @@ plugins:
 provider:
 
   tracing: 
-    lambda: true
-    apiGateway: true
+    lambda: false
+    apiGateway: false
 
   iamRoleStatements:
     - Effect: Allow
@@ -43,18 +43,18 @@ custom:
     models:
       - name: CreateFoodReviewRequest
         contentType: application/json
-        schema: ${file(models/create-food-review-request.json)}
+        schema: ${file(src/models/create-food-review-request.json)}
       - name: UpdateFoodReviewRequest
         contentType: application/json
-        schema: ${file(models/update-food-review-request.json)}
+        schema: ${file(src/models/update-food-review-request.json)}
       
 functions:
 
   Auth:
     handler: src/lambda/auth/auth0Authorizer.handler
 
-  GetFoodReviews:
-    handler: src/lambda/http/getFoodReviews.handler
+  GetFoodReview:
+    handler: src/lambda/http/getFoodReview.handler
     events:
       - http:
           method: get
@@ -137,7 +137,7 @@ functions:
     
 resources:
   Resources:
-    ToDoDynamoDBTable:
+    FoodReviewDynamoDBTable:
       Type: "AWS::DynamoDB::Table"
       Properties:
         AttributeDefinitions:

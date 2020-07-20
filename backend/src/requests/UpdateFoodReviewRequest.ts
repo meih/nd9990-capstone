@@ -3,6 +3,7 @@
  */
 export interface UpdateFoodReviewRequest {
   name: string
-  dueDate: string
-  done: boolean
+  caption: string
+  review: string
+  shopUrl?: string
 }

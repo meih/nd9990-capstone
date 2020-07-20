@@ -6,6 +6,7 @@ const XAWS = AWSXRay.captureAWS(AWS)
 
 import { FoodReview } from '../models/FoodReview'
 import { FoodReviewUpdate } from '../models/FoodReviewUpdate'
+import { UpdateFoodReviewRequest } from '../requests/UpdateFoodReviewRequest'
 
 export class FoodReviewAccess {
 
@@ -43,7 +44,7 @@ export class FoodReviewAccess {
   async updateFoodReview(
     userId: string,
     reviewId: string,
-    foodReviewUpdate: FoodReviewUpdate
+    foodReviewUpdate: UpdateFoodReviewRequest
     ): Promise<FoodReview> {
     await this.docClient.update({
       TableName: this.foodReviewTable,
