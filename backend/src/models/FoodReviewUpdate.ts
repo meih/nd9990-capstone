@@ -3,4 +3,5 @@ export interface FoodReviewUpdate {
   caption: string
   review: string
   shopUrl?: string
+  attachmentUrl?: string
 }

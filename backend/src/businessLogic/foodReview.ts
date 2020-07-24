@@ -13,6 +13,13 @@ export async function getAllFoodReviews(
   return foodReviewAccess.getAllFoodReviews(userId)
 }
 
+export async function getFoodReviewById(
+  userId: string,
+  reviewId: string
+): Promise<FoodReview[]> {
+  return foodReviewAccess.getFoodReviewById(userId, reviewId)
+}
+
 export async function createFoodReview(
   userId: string,
   createFoodReviewRequest: CreateFoodReviewRequest
@@ -28,7 +35,7 @@ export async function createFoodReview(
     caption: createFoodReviewRequest.caption,
     review: createFoodReviewRequest.review,
     shopUrl: createFoodReviewRequest.shopUrl,
-    attachmentUrl: null
+    attachmentUrl: createFoodReviewRequest.attachmentUrl
   })
 }
 
@@ -51,6 +58,6 @@ export async function setAttachmentUrl(
   userId: string,
   reviewId: string,
   url: string
-): Promise<FoodReview> {
+): Promise<string> {
   return foodReviewAccess.setAttachmentUrl(userId, reviewId, url)
 }

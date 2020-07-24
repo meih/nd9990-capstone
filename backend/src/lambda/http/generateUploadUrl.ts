@@ -15,7 +15,7 @@ const urlExpiration = process.env.SIGNED_URL_EXPIRATION
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   console.log('Processing event: ', event)
 
-  const reviewId = event.pathParameters.reviewId
+  const reviewId = event.pathParameters.foodReviewId
   const imageId = uuid.v4()
   const userId = getUserId(event)
   
@@ -26,8 +26,10 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
   })
   console.log(url)
 
-  const plain_url = url.replace(/\?.*$/,"");
-  const items = await setAttachmentUrl(userId, reviewId, plain_url)
+  if (reviewId) {
+    const plain_url = url.replace(/\?.*$/,"");
+    await setAttachmentUrl(userId, reviewId, plain_url)
+  }
 
   const response = {
     statusCode: 200,

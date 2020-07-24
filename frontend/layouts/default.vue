@@ -6,6 +6,7 @@
       :clipped="clipped"
       fixed
       app
+      class="hd"
     >
       <v-list>
         <v-list-item
@@ -28,6 +29,7 @@
       :clipped-left="clipped"
       fixed
       app
+      class="hd"
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="title" />
@@ -43,14 +45,15 @@
         </v-btn>
       </div>
     </v-app-bar>
-    <v-content>
+    <v-main class="bg">
       <v-container>
         <nuxt />
       </v-container>
-    </v-content>
+    </v-main>
     <v-footer
       :absolute="!fixed"
       app
+      class="ft"
     >
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
@@ -79,8 +82,23 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Good Food To Go'
+      title: ''
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+$pink: #EF9A9A;
+$green: #AED581;
+
+.bg {
+  background-image: linear-gradient($pink, $green);
+}
+.hd {
+  background-color: $pink;
+}
+.ft {
+  background-color: $green;
+}
+</style>

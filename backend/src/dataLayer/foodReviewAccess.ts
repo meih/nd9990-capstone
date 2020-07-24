@@ -32,6 +32,25 @@ export class FoodReviewAccess {
     return items as FoodReview[]
   }
 
+  async getFoodReviewById(
+    userId: string,
+    reviewId: string
+  ): Promise<FoodReview[]> {
+    console.log('Getting a food review by Id')
+
+    const result = await this.docClient.query({
+      TableName : this.foodReviewTable,
+      KeyConditionExpression: 'userId = :userId, reviewId = :reviewId',
+      ExpressionAttributeValues: {
+        ':userId': userId,
+        ':reviewId': reviewId,
+      }
+    }).promise()
+
+    const items = result.Items
+    return items as FoodReview[]
+  }
+
   async createFoodReview(foodReview: FoodReview): Promise<FoodReview> {
     await this.docClient.put({
       TableName: this.foodReviewTable,
@@ -84,7 +103,7 @@ export class FoodReviewAccess {
     userId: string,
     reviewId: string,
     attachmentUrl: string
-    ): Promise<FoodReview> {
+    ): Promise<string> {
     await this.docClient.update({
       TableName: this.foodReviewTable,
       Key: {
@@ -97,7 +116,7 @@ export class FoodReviewAccess {
       }
     }).promise()
 
-    return
+    return attachmentUrl
   }
 
 }

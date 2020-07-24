@@ -68,6 +68,21 @@ functions:
         - arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.FOOD_REVIEW_TABLE}
         - arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.FOOD_REVIEW_TABLE}/index/${self:provider.environment.FOOD_REVIEW_INDEX}
 
+  GetFoodReviewById:
+    handler: src/lambda/http/getFoodReviewById.handler
+    events:
+      - http:
+          method: get
+          path: review/{foodReviewId}
+          cors: true
+    iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+      Resource:
+        - arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.FOOD_REVIEW_TABLE}
+        - arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.FOOD_REVIEW_TABLE}/index/${self:provider.environment.FOOD_REVIEW_INDEX}
+
   CreateFoodReview:
     handler: src/lambda/http/createFoodReview.handler
     events:
@@ -80,7 +95,7 @@ functions:
             summary: Create a new food review
             description: Create a new food review
             requestModels:
-              'application/json': FoodReviewRequest
+              'application/json': CreateFoodReviewRequest
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -95,6 +110,12 @@ functions:
           method: patch
           path: review/{foodReviewId}
           cors: true
+          reqValidatorName: RequestBodyValidator
+          documentation:
+            summary: Update an existing food review
+            description: Update an existing food review
+            requestModels:
+              'application/json': UpdateFoodReviewRequest
     iamRoleStatements:
       - Effect: Allow
         Action:

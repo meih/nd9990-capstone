@@ -2,7 +2,7 @@
   <v-layout
     column
   >
-    <h1>Create a post:</h1>
+    <h1>Update post:</h1>
     <v-row justify="center">
       <v-col cols="12" sm="10" md="8" lg="6">
         <ReviewForm />

@@ -6,4 +6,5 @@ export interface UpdateFoodReviewRequest {
   caption: string
   review: string
   shopUrl?: string
+  attachmentUrl?: string
 }

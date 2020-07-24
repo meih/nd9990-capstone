@@ -9,7 +9,7 @@ import { getUserId } from '../utils'
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   console.log('Processing event: ', event)
 
-  const reviewId = event.pathParameters.reviewId
+  const reviewId = event.pathParameters.foodReviewId
   const userId = getUserId(event)
   const updatedTodo: UpdateFoodReviewRequest = JSON.parse(event.body)
   const items = await updateFoodReview(userId, reviewId, updatedTodo)

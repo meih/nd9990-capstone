@@ -5,9 +5,8 @@ import Axios from 'axios'
 import { UpdateFoodReviewRequest } from '../types/UpdateFoodReviewRequest';
 
 export async function getFoodReviews(idToken: string): Promise<FoodReview[]> {
-  console.log('Fetching todos')
 
-  const response = await Axios.get(`${apiEndpoint}/todos`, {
+  const response = await Axios.get(`${apiEndpoint}/review`, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `${idToken}`
@@ -21,7 +20,8 @@ export async function createFoodReview(
   idToken: string,
   newFoodReview: CreateFoodReviewRequest
 ): Promise<FoodReview> {
-  const response = await Axios.post(`${apiEndpoint}/todos`,  JSON.stringify(newFoodReview), {
+  console.log('FoodReview:', newFoodReview)
+  const response = await Axios.post(`${apiEndpoint}/review`,  JSON.stringify(newFoodReview), {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `${idToken}`
@@ -32,10 +32,10 @@ export async function createFoodReview(
 
 export async function patchFoodReview(
   idToken: string,
-  todoId: string,
+  reviewId: string,
   updatedFoodReview: UpdateFoodReviewRequest
 ): Promise<void> {
-  await Axios.patch(`${apiEndpoint}/todos/${todoId}`, JSON.stringify(updatedFoodReview), {
+  await Axios.patch(`${apiEndpoint}/review/${reviewId}`, JSON.stringify(updatedFoodReview), {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `${idToken}`
@@ -45,9 +45,9 @@ export async function patchFoodReview(
 
 export async function deleteFoodReview(
   idToken: string,
-  todoId: string
+  reviewId: string
 ): Promise<void> {
-  await Axios.delete(`${apiEndpoint}/todos/${todoId}`, {
+  await Axios.delete(`${apiEndpoint}/review/${reviewId}`, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `${idToken}`
@@ -57,9 +57,9 @@ export async function deleteFoodReview(
 
 export async function getUploadUrl(
   idToken: string,
-  todoId: string
+  reviewId: string
 ): Promise<string> {
-  const response = await Axios.post(`${apiEndpoint}/todos/${todoId}/attachment`, '', {
+  const response = await Axios.post(`${apiEndpoint}/review/${reviewId}/attachment`, '', {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `${idToken}`

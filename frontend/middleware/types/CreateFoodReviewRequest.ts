@@ -3,4 +3,5 @@ export interface CreateFoodReviewRequest {
   name: string
   review: string
   shopUrl: string
+  attachmentUrl?: string
 }

@@ -1,4 +1,4 @@
-import { apiEndpoint } from '../config'
+import { todoApiEndpoint } from '../config'
 import { Todo } from '../types/Todo';
 import { CreateTodoRequest } from '../types/CreateTodoRequest';
 import Axios from 'axios'
@@ -7,7 +7,7 @@ import { UpdateTodoRequest } from '../types/UpdateTodoRequest';
 export async function getTodos(idToken: string): Promise<Todo[]> {
   console.log('Fetching todos')
 
-  const response = await Axios.get(`${apiEndpoint}/todos`, {
+  const response = await Axios.get(`${todoApiEndpoint}/todos`, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `${idToken}`
@@ -21,7 +21,7 @@ export async function createTodo(
   idToken: string,
   newTodo: CreateTodoRequest
 ): Promise<Todo> {
-  const response = await Axios.post(`${apiEndpoint}/todos`,  JSON.stringify(newTodo), {
+  const response = await Axios.post(`${todoApiEndpoint}/todos`,  JSON.stringify(newTodo), {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `${idToken}`
@@ -35,7 +35,7 @@ export async function patchTodo(
   todoId: string,
   updatedTodo: UpdateTodoRequest
 ): Promise<void> {
-  await Axios.patch(`${apiEndpoint}/todos/${todoId}`, JSON.stringify(updatedTodo), {
+  await Axios.patch(`${todoApiEndpoint}/todos/${todoId}`, JSON.stringify(updatedTodo), {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `${idToken}`
@@ -47,7 +47,7 @@ export async function deleteTodo(
   idToken: string,
   todoId: string
 ): Promise<void> {
-  await Axios.delete(`${apiEndpoint}/todos/${todoId}`, {
+  await Axios.delete(`${todoApiEndpoint}/todos/${todoId}`, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `${idToken}`
@@ -59,7 +59,7 @@ export async function getUploadUrl(
   idToken: string,
   todoId: string
 ): Promise<string> {
-  const response = await Axios.post(`${apiEndpoint}/todos/${todoId}/attachment`, '', {
+  const response = await Axios.post(`${todoApiEndpoint}/todos/${todoId}/attachment`, '', {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `${idToken}`

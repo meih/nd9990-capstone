@@ -1,7 +1,7 @@
 import 'source-map-support/register'
 
 import { APIGatewayProxyEvent, APIGatewayProxyResult, APIGatewayProxyHandler } from 'aws-lambda'
-import { deleteFoodReview } from '../../businessLogic/foodReview'
+import { getFoodReviewById } from '../../businessLogic/foodReview'
 import { getUserId } from '../utils'
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
@@ -9,7 +9,9 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
 
   const reviewId = event.pathParameters.foodReviewId
   const userId = getUserId(event)
-  await deleteFoodReview(userId, reviewId)
+  const items = await getFoodReviewById(userId, reviewId)
+
+  console.log(items)
 
   const response = {
     statusCode: 200,
@@ -17,6 +19,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
         'Access-Control-Allow-Origin': '*'
     },
     body: JSON.stringify({
+        items
     }),
   };
 

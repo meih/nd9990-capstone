@@ -4,43 +4,28 @@
     justify-center
     align-center
   >
-  <h1>Got good food to go?  Let's share it!</h1>
+  <h1>Got good food to go?  Let the world know!</h1>
   <v-spacer></v-spacer>
     <v-flex
       xs12
       sm8
       md6
     >
-      <div class="text-center">
-        <todo-items />
+      <div class="text-left">
+        <review-items />
       </div>
-
-      <v-card>
-        <v-card-title class="headline">
-          New user here?
-        </v-card-title>
-        <v-card-text></v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="primary"
-            nuxt
-            to="/inspire"
-          >
-            Login
-          </v-btn>
-        </v-card-actions>
-      </v-card>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
 import TodoItems from '~/components/TodoItems.vue'
+import ReviewItems from '~/components/ReviewItems.vue'
 
 export default {
   components: {
-    TodoItems
+    TodoItems,
+    ReviewItems
   }
 }
 </script>
