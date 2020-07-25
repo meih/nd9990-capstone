@@ -135,7 +135,6 @@ export default {
             this.$auth.getToken('auth0'),
             this.newFoodReviewRequest
           );
-          alert('Your review is posted!');
         }
         catch(error) {
           console.log(error)
@@ -146,6 +145,7 @@ export default {
           this.alert = true;
           this.message = 'Your review is successfully posted!'
           alert('Your review is successfully posted!');
+          this.$router.push('/')
         }
       }
     },

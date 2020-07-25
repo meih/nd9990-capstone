@@ -128,9 +128,6 @@ export default {
     DialogMessage
   },
   methods: {
-    displayDeleteConfirmDialog() {
-
-    },
     async getFoodReviewItems() {
       if (this.$auth.loggedIn) {
         console.log(this.$auth.user)
@@ -147,11 +144,11 @@ export default {
       }
     },
     async deleteFoodReview(reviewId) {
-      if (this.$auth.loggedIn) {
+      if (
+        confirm('Are you sure you want to delete this item?') &&
+        this.$auth.loggedIn
+        ) {
         try {
-          console.log(this.$auth.getToken('auth0'))
-          console.log(reviewId)
-          confirm('Are you sure you want to delete this item?')
           this.items = await deleteFoodReview(
             this.$auth.getToken('auth0'),
             reviewId
@@ -160,6 +157,10 @@ export default {
         }
         catch(error) {
           console.log(error)
+        }
+        finally {
+          alert('Your review is successfully deleted.');
+          this.$router.push('/')
         }
       }
     },
