@@ -16,6 +16,32 @@ export async function getFoodReviews(idToken: string): Promise<FoodReview[]> {
   return response.data.items
 }
 
+export async function getAllFoodReviews(idToken: string): Promise<FoodReview[]> {
+
+  const response = await Axios.get(`${apiEndpoint}/review`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${idToken}`
+    },
+  })
+  console.log('FoodReviews:', response.data)
+  return response.data.items
+}
+
+export async function getFoodReviewById(idToken: string,
+    reviewId: string  
+  ): Promise<FoodReview[]> {
+
+  const response = await Axios.get(`${apiEndpoint}/review/${reviewId}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${idToken}`
+    },
+  })
+  console.log('FoodReviews:', response.data)
+  return response.data.items
+}
+
 export async function createFoodReview(
   idToken: string,
   newFoodReview: CreateFoodReviewRequest

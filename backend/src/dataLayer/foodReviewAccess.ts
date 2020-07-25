@@ -15,7 +15,7 @@ export class FoodReviewAccess {
     private readonly foodReviewTable = process.env.FOOD_REVIEW_TABLE) {
   }
 
-  async getAllFoodReviews(
+  async getFoodReviews(
     userId: string
   ): Promise<FoodReview[]> {
     console.log('Getting all food reviews')
@@ -32,6 +32,18 @@ export class FoodReviewAccess {
     return items as FoodReview[]
   }
 
+  async getAllFoodReviews(): Promise<FoodReview[]> {
+    console.log('Getting new food reviews')
+
+    const result = await this.docClient.scan({
+      TableName: this.foodReviewTable,
+      Limit: 10
+    }).promise()
+
+    const items = result.Items
+    return items as FoodReview[]
+  }
+
   async getFoodReviewById(
     userId: string,
     reviewId: string
@@ -40,7 +52,7 @@ export class FoodReviewAccess {
 
     const result = await this.docClient.query({
       TableName : this.foodReviewTable,
-      KeyConditionExpression: 'userId = :userId, reviewId = :reviewId',
+      KeyConditionExpression: 'userId = :userId AND reviewId = :reviewId',
       ExpressionAttributeValues: {
         ':userId': userId,
         ':reviewId': reviewId,

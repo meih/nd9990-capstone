@@ -1,3 +1,9 @@
 <template>
-  <p>Signing in...</p>
+  <div>
+    <v-progress-circular
+      :width="3"
+      indeterminate
+    ></v-progress-circular>
+    Signing in...
+  </div>
 </template>

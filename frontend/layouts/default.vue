@@ -6,7 +6,7 @@
       :clipped="clipped"
       fixed
       app
-      class="hd"
+      dark
     >
       <v-list>
         <v-list-item
@@ -29,17 +29,27 @@
       :clipped-left="clipped"
       fixed
       app
+      dark
       class="hd"
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="title" />
       <v-spacer />
       <div v-if="$auth.loggedIn">
+        <span>{{ $auth.user.name }}</span>
+        <v-avatar>
+          <v-img
+            :src="$auth.user.picture"
+          >
+          </v-img>
+        </v-avatar>
         <v-btn @click="$auth.logout()">
           <v-icon>mdi-logout</v-icon>
         </v-btn>
       </div>
       <div v-else> 
+        <span>Guest</span>
+        <v-icon>mdi-account</v-icon>
         <v-btn @click="$auth.loginWith('auth0')">
           <v-icon>mdi-login</v-icon>
         </v-btn>

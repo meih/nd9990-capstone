@@ -7,10 +7,16 @@ import { UpdateFoodReviewRequest } from '../requests/UpdateFoodReviewRequest'
 
 const foodReviewAccess = new FoodReviewAccess()
 
+export async function getFoodReviews(
+  userId: string
+): Promise<FoodReview[]> {
+  return foodReviewAccess.getFoodReviews(userId)
+}
+
 export async function getAllFoodReviews(
   userId: string
 ): Promise<FoodReview[]> {
-  return foodReviewAccess.getAllFoodReviews(userId)
+  return foodReviewAccess.getAllFoodReviews()
 }
 
 export async function getFoodReviewById(

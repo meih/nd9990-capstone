@@ -5,7 +5,7 @@
     <h1>Update post:</h1>
     <v-row justify="center">
       <v-col cols="12" sm="10" md="8" lg="6">
-        <ReviewForm />
+        <ReviewForm :reviewId="reviewId" />
       </v-col>
     </v-row>
   </v-layout>
@@ -15,6 +15,14 @@
 import ReviewForm from '~/components/ReviewForm.vue'
 
 export default {
+  data() {
+    return {
+      reviewId: this.$route.query.reviewId
+    }
+  },
+  mounted() {
+    console.log(this.$route)
+  },
   components: {
     ReviewForm
   }

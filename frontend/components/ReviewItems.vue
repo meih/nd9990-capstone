@@ -1,79 +1,100 @@
 <template>
   <div>
     <div v-if="$auth.loggedIn">
-      <div v-if="loading">Loading...</div>
-      <div
-        v-else
-        v-for="item in items"
-        :key="item.id"
-      >
-        <v-card
-          class="mx-auto"
-          max-width="400"
-          hover
-          rounded
-          outlined
-          mb-10
-          pb-5
-        >
-          <div v-if="item.attachmentUrl">
-            <v-img
-              class="white--text align-end"
-              height="200px"
-              :src="item.attachmentUrl"
-            >
-            </v-img>
+      <v-container fluid>
+        <v-row>
+          <div v-if="loading">
+            <v-progress-circular
+              :width="3"
+              indeterminate
+            ></v-progress-circular>
+            Loading...
           </div>
-          <div v-else
-            height="200px"
+          <div
+            v-else
+            v-for="item in items"
+            :key="item.id"
           >
-
-          </div>
-          <v-card-title>{{ item.caption }}</v-card-title>
-          <v-card-subtitle>
-            <v-chip
-              class="ma-2"
-              color="deep-purple accent-4"
-              outlined
-            >
-              <v-icon left>mdi-silverware-variant</v-icon>
-              {{ item.name }}
-            </v-chip>
-          </v-card-subtitle>
-          <v-chip
-            class="ma-2"
-            color="deep-purple accent-4"
-            outlined
-          >
-            <div v-if="$auth.userId === item.userId">
-              <v-avatar>
-                <v-img
-                  :src="$auth.user.picture"
+            <v-col cols="12">
+              <v-card
+                class="mx-auto"
+                max-width="400"
+                hover
+                rounded
+                outlined
+                ma-10
+                pb-10
+              >
+                <div v-if="item.attachmentUrl">
+                  <v-img
+                    class="white--text align-end"
+                    max-height="200px"
+                    :src="item.attachmentUrl"
+                  >
+                  </v-img>
+                </div>
+                <div v-else>
+                  <v-card
+                    height="200px"
+                  >
+                  <v-icon centered xl>mdi-silverware-variant</v-icon>
+                  </v-card>
+                </div>
+                <v-card-title>{{ item.caption }}</v-card-title>
+                <v-card-subtitle>Posted on: {{ item.createdAt.replace(/T.*$/, "") }}</v-card-subtitle>
+                <v-card-text>
+                <span>Location: </span>
+                <v-chip
+                  class="ma-2"
+                  color="deep-purple accent-4"
+                  outlined
                 >
-                </v-img>
-              </v-avatar>
-            </div>
-            <div v-else>
-              <v-icon left>mdi-account</v-icon>
-            {{ $auth.user.name }}
-            </div>
-          </v-chip>
-          <div class="review">
-            <v-card-text>{{ item.review }}</v-card-text>
+                  <v-icon left>mdi-silverware-variant</v-icon>
+                  <a :href="item.shopUrl">{{ item.name }}</a>
+                </v-chip>
+                <br />
+                <span>Posted by: </span>
+                <v-chip
+                  class="ma-2"
+                  color="deep-purple accent-4"
+                  outlined
+                >
+                  <div v-if="$auth.user.sub === item.userId">
+                    <v-avatar left>
+                      <v-img
+                        :src="$auth.user.picture"
+                      >
+                      </v-img>
+                    </v-avatar>
+                    You
+                  </div>
+                  <div v-else>
+                    <v-icon left>mdi-account</v-icon>
+                    A Reviewer
+                  </div>
+                </v-chip>
+                </v-card-text>
+                <div class="review">
+                  <v-card-text class="review">{{ item.review }}</v-card-text>
+                </div>
+                <div v-if="$auth.user.sub === item.userId">
+                  <v-bottom-navigation
+                    class="d-flex justify-2 mb-0"
+                    grow
+                  >
+                    <v-btn :to="{ path: 'updateReview', query: { reviewId: item.reviewId }}" nuxt>
+                      <v-icon>mdi-pencil</v-icon>
+                    </v-btn>
+                    <v-btn @click="deleteFoodReview(item.reviewId)">
+                      <v-icon>mdi-delete</v-icon>
+                    </v-btn>
+                  </v-bottom-navigation>
+                </div>
+              </v-card>
+            </v-col>
           </div>
-          <v-bottom-navigation
-            class="d-flex justify-2 mb-0"
-            grow
-          >
-            <v-btn :to="{ path: 'updateReview', query: { reviewId: item.reviewId }}" nuxt>
-              <v-icon>mdi-pencil</v-icon>
-            </v-btn>
-            <v-btn @click="deleteFoodReview(item.reviewId)">
-              <v-icon>mdi-delete</v-icon>
-            </v-btn>
-          </v-bottom-navigation>
-        </v-card>
-      </div>
+        </v-row>
+      </v-container>
     </div>
     <div v-else>
       <v-card>
@@ -88,9 +109,7 @@
 </template>
 
 <script>
-import { getTodos, createTodo } from '../middleware/api/todo';
 import { getFoodReviews, deleteFoodReview } from '../middleware/api/foodReview';
-import { createTodoRequest } from '../middleware/types/CreateTodoRequest'
 import DialogMessage from '~/components/DialogMessage.vue'
 
 export default {
@@ -109,6 +128,9 @@ export default {
     DialogMessage
   },
   methods: {
+    displayDeleteConfirmDialog() {
+
+    },
     async getFoodReviewItems() {
       if (this.$auth.loggedIn) {
         console.log(this.$auth.user)
@@ -129,9 +151,9 @@ export default {
         try {
           console.log(this.$auth.getToken('auth0'))
           console.log(reviewId)
+          confirm('Are you sure you want to delete this item?')
           this.items = await deleteFoodReview(
             this.$auth.getToken('auth0'),
-//            this.selectedReviewId
             reviewId
           );
           this.loading = false;

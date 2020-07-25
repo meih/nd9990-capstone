@@ -3,12 +3,26 @@
 
 This is a capstone project for Udacity Cloud Developer Nanodgree.
 
+## Functionality of the application
+
+This application will allow creating/removing/updating/fetching Food Review items.
+
+Each user can:
+* View all food review items including the ones other people have created
+
+And once logged in, he/she can:
+* Post a new food review
+* Edit/Delete Food Review items that he/she has created
+
 ## API endpoints
-* GET - https://iyho77q7o7.execute-api.us-east-1.amazonaws.com/dev/review
-* POST - https://iyho77q7o7.execute-api.us-east-1.amazonaws.com/dev/review
-* PATCH - https://iyho77q7o7.execute-api.us-east-1.amazonaws.com/dev/review/{foodReviewId}
-* DELETE - https://iyho77q7o7.execute-api.us-east-1.amazonaws.com/dev/review/{foodReviewId}
-* POST - https://iyho77q7o7.execute-api.us-east-1.amazonaws.com/dev/review/{foodReviewId}/attachment
+
+| Functionality | Method | Endpoint |
+|---|---|---|
+| Get Food Reviews | GET | https://iyho77q7o7.execute-api.us-east-1.amazonaws.com/dev/review |
+| Post a Food Review | POST | https://iyho77q7o7.execute-api.us-east-1.amazonaws.com/dev/review |
+| Update a Food Review | PATCH | https://iyho77q7o7.execute-api.us-east-1.amazonaws.com/dev/review/{foodReviewId} |
+| Delete a Food Review | DELETE | https://iyho77q7o7.execute-api.us-east-1.amazonaws.com/dev/review/{foodReviewId} |
+| Generate a signed URL for image upload | POST | https://iyho77q7o7.execute-api.us-east-1.amazonaws.com/dev/review/{foodReviewId}/attachment |
 
 ## Lambda functions
 * Auth: food-review-app-dev-Auth
@@ -19,7 +33,9 @@ This is a capstone project for Udacity Cloud Developer Nanodgree.
 * GenerateUploadUrl: food-review-app-dev-GenerateUploadUrl
 
 ## Technology stack
-* Frontend: Nuxt.js, Vuetify
-* Backend: AWS Lambda
+* Frontend: Nuxt.js with Vuetify
+* Backend: AWS API Gateway & Lambda
 * Datastore: AWS DynamoDB
+* Object storage (for images): AWS S3
+* Authentication: Auth0
 * Deployment: Serverless framework
