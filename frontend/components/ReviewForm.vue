@@ -31,6 +31,9 @@
           ></v-textarea>
         </v-card-text>
         <v-card-text>
+          <div v-if="imageUrl">
+            <v-img :src="imageUrl" max-height="200px"></v-img>
+          </div>
           <v-file-input
             label="Photo of the food (Optional)"
             filled
@@ -54,17 +57,8 @@
           <div v-else>
             <v-btn @click="postReview">Submit</v-btn>
           </div>
-
-          <v-btn @click="showAlert">Alert</v-btn>
         </v-card-text>
-        <dialog-test />
         <dialog-message :message="message" :messageType="messageType" :alert="alert" />
-        <v-btn
-          color="primary"
-          @click="alert = !alert"
-        >
-          Toggle
-        </v-btn>
       </v-card>
     </div>
     <div v-else>
@@ -89,10 +83,8 @@ import DialogMessage from '~/components/DialogMessage.vue'
 export default {
   data() {
     return {
-      num: 1,
       loading: true,
       items: [],
-      caption: '',
       dialog: false,
       message: 'Your review is successfully posted!',
       messageType: 'success',
@@ -105,6 +97,7 @@ export default {
         attachmentUrl: ''
       },
       uploadUrl: '',
+      imageUrl: '',
       selectedImage: null,
       hasValidReviewId: false
     }
@@ -135,6 +128,9 @@ export default {
             this.$auth.getToken('auth0'),
             this.newFoodReviewRequest
           );
+          alert('Your review is successfully posted!');
+          this.message = 'Your review is successfully posted!'
+          this.alert = true;
         }
         catch(error) {
           console.log(error)
@@ -142,9 +138,6 @@ export default {
         }
         finally {
           this.loading = false;
-          this.alert = true;
-          this.message = 'Your review is successfully posted!'
-          alert('Your review is successfully posted!');
           this.$router.push('/')
         }
       }
@@ -163,6 +156,8 @@ export default {
             this.newFoodReviewRequest
           );
           alert('Your review is successfully updated!');
+          this.message = 'Your review is successfully updated!'
+          this.alert = true;
         }
         catch(error) {
           console.log(error)
@@ -170,8 +165,7 @@ export default {
         }
         finally {
           this.loading = false;
-          this.alert = true;
-          this.message = 'Your review is successfully posted!'
+          this.$router.push('/')
         }
       }
     },
@@ -189,40 +183,30 @@ export default {
             this.newFoodReviewRequest.review = this.items[0].review
             this.newFoodReviewRequest.shopUrl = this.items[0].shopUrl
             this.newFoodReviewRequest.attachmentUrl = this.items[0].attachmentUrl
+            this.imageUrl = this.items[0].attachmentUrl
             this.hasValidReviewId = true;
           }
         }
         catch(error) {
           console.log(error)
-          this.message = 'An error occurred. Please try again.'
         }
         finally {
           this.loading = false;
-          this.alert = true;
-          this.message = 'Your review is successfully posted!'
         }
       }
     },
     async getImageUrl() {
       if (this.$auth.loggedIn) {
         try {
-          console.log(this.$auth.getToken('auth0'))
           this.uploadUrl = await getUploadUrl(
             this.$auth.getToken('auth0'),
             this.reviewId
           );
+          console.log("uploadUrl: " + this.uploadUrl)
         }
         catch(error) {
           console.log(error)
-          this.message = 'An error occurred. Please try again.'
         }
-        finally {
-          console.log("uploadUrl: " + this.uploadUrl)
-          this.loading = false;
-          this.alert = true;
-//          this.message = 'Your image is successfully posted!'
-        }
-
 
       }
     },

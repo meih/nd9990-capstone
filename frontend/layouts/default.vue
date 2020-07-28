@@ -87,6 +87,11 @@ export default {
           icon: 'mdi-pencil',
           title: 'Create a post',
           to: '/review'
+        },
+        {
+          icon: 'mdi-heart',
+          title: 'Favorites',
+          to: '/review'
         }
       ],
       miniVariant: false,

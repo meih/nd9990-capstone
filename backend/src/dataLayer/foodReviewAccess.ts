@@ -12,13 +12,14 @@ export class FoodReviewAccess {
 
   constructor(
     private readonly docClient: DocumentClient = createDynamoDBClient(),
-    private readonly foodReviewTable = process.env.FOOD_REVIEW_TABLE) {
+    private readonly foodReviewTable = process.env.FOOD_REVIEW_TABLE,
+    private readonly foodReviewIndex = process.env.FOOD_REVIEW_INDEX) {
   }
 
   async getFoodReviews(
     userId: string
   ): Promise<FoodReview[]> {
-    console.log('Getting all food reviews')
+    console.log('Getting food reviews')
 
     const result = await this.docClient.query({
       TableName : this.foodReviewTable,
@@ -33,7 +34,7 @@ export class FoodReviewAccess {
   }
 
   async getAllFoodReviews(): Promise<FoodReview[]> {
-    console.log('Getting new food reviews')
+    console.log('Getting all food reviews')
 
     const result = await this.docClient.scan({
       TableName: this.foodReviewTable,
@@ -52,9 +53,9 @@ export class FoodReviewAccess {
 
     const result = await this.docClient.query({
       TableName : this.foodReviewTable,
-      KeyConditionExpression: 'userId = :userId AND reviewId = :reviewId',
+      IndexName : this.foodReviewIndex,
+      KeyConditionExpression: 'reviewId = :reviewId',
       ExpressionAttributeValues: {
-        ':userId': userId,
         ':reviewId': reviewId,
       }
     }).promise()

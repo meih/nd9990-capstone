@@ -30,6 +30,7 @@ provider:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
     FOOD_REVIEW_TABLE: Food-Review-Table-${self:provider.stage}
     FOOD_REVIEW_INDEX: Food-Review-Index-${self:provider.stage}
+    FAVORITE_REVIEW_TABLE: Favorite-Review-Table-${self:provider.stage}
     IMAGES_S3_BUCKET: serverless-food-review-meiko-${self:provider.stage}
     SIGNED_URL_EXPIRATION: 300
 
@@ -53,12 +54,12 @@ functions:
   Auth:
     handler: src/lambda/auth/auth0Authorizer.handler
 
-  GetFoodReview:
-    handler: src/lambda/http/getFoodReview.handler
+  GetFoodReviews:
+    handler: src/lambda/http/getFoodReviews.handler
     events:
       - http:
           method: get
-          path: review
+          path: myreview
           cors: true
     iamRoleStatements:
     - Effect: Allow
@@ -151,7 +152,49 @@ functions:
           - dynamodb:DeleteItem
         Resource:
           - arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.FOOD_REVIEW_TABLE}
+
+  getFavoriteReviews:
+    handler: src/lambda/http/getFavoriteReviews.handler
+    events:
+      - http:
+          method: get
+          path: favorite
+          cors: true
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource:
+          - arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.FAVORITE_REVIEW_TABLE}
+                
+  CreateFavoriteReview:
+    handler: src/lambda/http/createFavoriteReview.handler
+    events:
+      - http:
+          method: post
+          path: favorite/{foodReviewId}
+          cors: true
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+        Resource:
+          - arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.FAVORITE_REVIEW_TABLE}
         
+  DeleteFavoriteReview:
+    handler: src/lambda/http/deleteFavoriteReview.handler
+    events:
+      - http:
+          method: delete
+          path: favorite/{foodReviewId}
+          cors: true
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:DeleteItem
+        Resource:
+          - arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.FAVORITE_REVIEW_TABLE}
+          
   GenerateUploadUrl:
     handler: src/lambda/http/generateUploadUrl.handler
     events:
@@ -200,6 +243,22 @@ resources:
             Projection:
               ProjectionType: ALL # What attributes will be copied to an index
 
+    FavoriteReviewDynamoDBTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+          - AttributeName: reviewId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+          - AttributeName: reviewId
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:provider.environment.FAVORITE_REVIEW_TABLE}
+          
     AttachmentsBucket:
       Type: AWS::S3::Bucket
       Properties:

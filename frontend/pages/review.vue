@@ -2,10 +2,10 @@
   <v-layout
     column
   >
-    <h1>Create a post:</h1>
+    <h1>{{ headText }} post:</h1>
     <v-row justify="center">
       <v-col cols="12" sm="10" md="8" lg="6">
-        <ReviewForm />
+        <ReviewForm :reviewId="reviewId" />
       </v-col>
     </v-row>
   </v-layout>
@@ -15,6 +15,12 @@
 import ReviewForm from '~/components/ReviewForm.vue'
 
 export default {
+  data() {
+    return {
+      reviewId: this.$route.query.reviewId,
+      headText: this.$route.query.reviewId ? 'Update my' : 'Create a'
+    }
+  },
   components: {
     ReviewForm
   }
@@ -22,9 +28,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/*
-div {
-  background-image: url('../assets/img/background.jpeg');
+@import url('https://fonts.googleapis.com/css2?family=Galada&display=swap');
+
+h1 {
+  font-family: 'Galada', cursive;
+  font-size: 8vh;
+  color: #263238;
 }
-*/
 </style>

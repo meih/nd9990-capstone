@@ -30,13 +30,14 @@ export default {
 
 <style lang="scss" scoped>
 h1 {
-  margin: 100px;
+  margin: 10vh;
   color: #263238;
   background: linear-gradient(
     to bottom,
-    transparent 80%,
-    #FFC107 81%,
-    transparent 95%,
+    transparent 90%,
+    #FFC107 90%,
+    #FFC107 95%,
+    transparent 95%
   )
 }
 </style>
