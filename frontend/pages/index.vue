@@ -12,7 +12,7 @@
       md6
     >
       <div class="text-left">
-        <review-items favoriteOnly="false" />
+        <review-items :favoriteOnly="false" />
       </div>
     </v-flex>
   </v-layout>
