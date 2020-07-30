@@ -95,7 +95,7 @@
                       <v-icon>mdi-pencil</v-icon>
                     </v-btn>
                     <v-btn @click="toggleFavorite(item.reviewId)">
-                      <div v-if="favoriteItems.find(s => s === item.reviewId)">
+                      <div v-if="favoriteIds.find(s => s === item.reviewId)">
                         <v-icon color="pink">mdi-heart</v-icon>
                       </div>
                       <div v-else>
@@ -113,7 +113,7 @@
                     grow
                   >
                     <v-btn @click="toggleFavorite(item.reviewId)">
-                      <div v-if="favoriteItems.find(s => s === item.reviewId)">
+                      <div v-if="favoriteIds.find(s => s === item.reviewId)">
                         <v-icon color="pink">mdi-heart</v-icon>
                       </div>
                       <div v-else>
@@ -150,24 +150,50 @@ export default {
     return {
       loading: true,
       items: [],
+      favoriteIds: [],
       favoriteItems: []
     }
   },
   mounted () {
-    this.getFoodReviewItems(),
-    this.getFavoriteReviewItems()
+    this.getFoodReviewItems()
+  },
+  props: {
+    favoriteOnly: {
+      type: Boolean,
+      default: false
+    }
   },
   components: {
     DialogMessage
   },
   methods: {
     async getFoodReviewItems() {
+    console.log("fav: " + this.favoriteOnly)
       if (this.$auth.loggedIn) {
         try {
           this.items = await getFoodReviews(
             this.$auth.getToken('auth0')
           );
+          await this.getFavoriteReviewItems()
+          if (this.favoriteOnly === true) {
+            this.items = this.favoriteItems
+          }
           this.loading = false;
+        }
+        catch(error) {          
+          console.log(error)
+        }
+      }
+    },
+    async getFavoriteReviewItems() {
+      if (this.$auth.loggedIn) {
+        try {
+          this.favoriteItems = await getFavoriteReviews(
+            this.$auth.getToken('auth0')
+          );
+          this.favoriteIds = this.favoriteItems.map(item => item.reviewId)
+          this.favoriteItems = this.items.filter(item => this.favoriteIds.indexOf(item.reviewId) >= 0)
+          console.log(this.favoriteIds)
         }
         catch(error) {          
           console.log(error)
@@ -192,19 +218,6 @@ export default {
         }
         finally {
           this.getFoodReviewItems()
-        }
-      }
-    },
-    async getFavoriteReviewItems() {
-      if (this.$auth.loggedIn) {
-        try {
-          this.favoriteItems = await getFavoriteReviews(
-            this.$auth.getToken('auth0')
-          );
-          console.log(this.favoriteItems)
-        }
-        catch(error) {          
-          console.log(error)
         }
       }
     },
@@ -235,16 +248,16 @@ export default {
       }
     },
     async toggleFavorite(reviewId) {
-      const index = this.favoriteItems.findIndex(item => item === reviewId) 
+      const index = this.favoriteIds.findIndex(item => item === reviewId) 
       if (index >= 0) {
         await this.deleteFavoriteReview(reviewId)
-        this.favoriteItems.splice(index, 1)
+        this.favoriteIds.splice(index, 1)
       }
       else {
         await this.createFavoriteReview(reviewId)
-        this.favoriteItems.push(reviewId)
+        this.favoriteIds.push(reviewId)
       }
-      console.log(this.favoriteItems)
+      console.log(this.favoriteIds)
     },
     openLink(url) {
       window.open(url)

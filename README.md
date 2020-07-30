@@ -8,9 +8,19 @@ This is a capstone project for Udacity Cloud Developer Nanodgree.
 This application will allow creating/removing/updating/fetching Food Review items.
 
 Once logged in, each user can:
-* View all food review items including the ones other people have created
+* View all food reviews including the ones other people have created
+* Mark/View favorite food reviews
 * Post a new food review
-* Edit/Delete Food Review items that he/she has created
+* Edit/Delete Food Reviews that he/she has created
+
+## Technology stack
+* Frontend: Nuxt.js with Vuetify
+* Backend: AWS Lambda with API Gateway
+* Datastore: AWS DynamoDB
+* Storage (for images): AWS S3
+* Authentication: Auth0
+* Backend deployment: Serverless framework
+* Frontend hosting: Netlify
 
 ## Demo site
 
@@ -21,6 +31,8 @@ https://reverent-meninsky-d2bd6e.netlify.app/
 ![Screenshot](assets/food-review-app-screenshot.png)
 
 ## API endpoints
+
+An user must be authenticated to call these APIs.
 
 ### For food reviews
 | Functionality | Method | Endpoint |
@@ -59,12 +71,3 @@ https://reverent-meninsky-d2bd6e.netlify.app/
 * GetFavoriteReviews: food-review-app-dev-getFavoriteReviews
 * CreateFavoriteReview: food-review-app-dev-CreateFavoriteReview
 * DeleteFavoriteReview: food-review-app-dev-DeleteFavoriteReview
-
-## Technology stack
-* Frontend: Nuxt.js with Vuetify
-* Backend: AWS Lambda with API Gateway
-* Datastore: AWS DynamoDB
-* Storage (for images): AWS S3
-* Authentication: Auth0
-* Backend deployment: Serverless framework
-* Frontend hosting: Netlify

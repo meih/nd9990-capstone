@@ -77,7 +77,6 @@
 <script>
 import { getFoodReview, getFoodReviewById, createFoodReview, patchFoodReview, getUploadUrl, uploadFile } from '../middleware/api/foodReview';
 import { createFoodReviewRequest } from '../middleware/types/CreateFoodReviewRequest'
-import DialogTest from '~/components/Dialog.vue'
 import DialogMessage from '~/components/DialogMessage.vue'
 
 export default {
@@ -109,7 +108,6 @@ export default {
   },
   props: [ 'reviewId' ],
   components: {
-    DialogTest,
     DialogMessage
   },
   methods: {

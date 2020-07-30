@@ -91,7 +91,7 @@ export default {
         {
           icon: 'mdi-heart',
           title: 'Favorites',
-          to: '/review'
+          to: '/favorites'
         }
       ],
       miniVariant: false,
