@@ -8,6 +8,7 @@
             label="Caption"
             placeholder="Fresh, delicious sushi to go!"
             v-model="newFoodReviewRequest.caption"
+            :rules="[() => !!name || 'This field is required']"
             required
           ></v-text-field>
         </v-card-text>
@@ -17,6 +18,7 @@
             label="Name of the restaurant, shop, food vendor, etc."
             placeholder="Sushi Saiko"
             v-model="newFoodReviewRequest.name"
+            :rules="[() => !!name || 'This field is required']"
             required
           ></v-text-field>
         </v-card-text>
@@ -27,6 +29,7 @@
             label="Your review"
             placeholder=""
             v-model="newFoodReviewRequest.review"
+            :rules="[() => !!name || 'This field is required']"
             required
           ></v-textarea>
         </v-card-text>

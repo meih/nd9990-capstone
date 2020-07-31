@@ -26,11 +26,6 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
   })
   console.log(url)
 
-  if (reviewId) {
-    const plain_url = url.replace(/\?.*$/,"");
-    await setAttachmentUrl(userId, reviewId, plain_url)
-  }
-
   const response = {
     statusCode: 200,
     headers: {

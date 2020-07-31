@@ -84,7 +84,7 @@ export class FoodReviewAccess {
         'userId': userId,
         'reviewId': reviewId
       },
-      UpdateExpression: 'set #name = :name, caption = :caption, review = :review, shopUrl = :shopUrl',
+      UpdateExpression: 'set #name = :name, caption = :caption, review = :review, shopUrl = :shopUrl, attachmentUrl = :attachmentUrl',
       ExpressionAttributeNames: {
         '#name': 'name'
       },
@@ -92,7 +92,8 @@ export class FoodReviewAccess {
         ':name' : foodReviewUpdate.name,
         ':caption' : foodReviewUpdate.caption,
         ':review' : foodReviewUpdate.review,
-        ':shopUrl' : foodReviewUpdate.shopUrl
+        ':shopUrl' : foodReviewUpdate.shopUrl,
+        ':attachmentUrl' : foodReviewUpdate.attachmentUrl
       }
     }).promise()
 

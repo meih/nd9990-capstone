@@ -174,6 +174,9 @@ export default {
           this.items = await getFoodReviews(
             this.$auth.getToken('auth0')
           );
+          this.items.sort((a, b) => {
+            return a.createdAt > b.createdAt ? -1 : 1
+          });
           await this.getFavoriteReviewItems()
           if (this.favoriteOnly === true) {
             this.items = this.favoriteItems
