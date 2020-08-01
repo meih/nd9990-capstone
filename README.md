@@ -1,6 +1,8 @@
 
 # Food Review App
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a9cec24e-5e69-44c5-a67f-2bd99c0f354e/deploy-status)](https://app.netlify.com/sites/reverent-meninsky-d2bd6e/deploys)
+
 This is a capstone project for Udacity Cloud Developer Nanodgree.
 
 ## Functionality of the application
@@ -37,21 +39,21 @@ An user must be authenticated to call these APIs.
 ### For food reviews
 | Functionality | Method | Endpoint |
 |---|---|---|
-| Get food reviews per user | GET | https://iyho77q7o7.execute-api.us-east-1.amazonaws.com/dev/myreview |
-| Get all food reviews | GET | https://iyho77q7o7.execute-api.us-east-1.amazonaws.com/dev/review/ |
-| Get a food review by ID | GET | https://iyho77q7o7.execute-api.us-east-1.amazonaws.com/dev/review/{foodReviewId} |
-| Post a food review | POST | https://iyho77q7o7.execute-api.us-east-1.amazonaws.com/dev/review |
-| Update a food review | PATCH | https://iyho77q7o7.execute-api.us-east-1.amazonaws.com/dev/review/{foodReviewId} |
-| Delete a food review | DELETE | https://iyho77q7o7.execute-api.us-east-1.amazonaws.com/dev/review/{foodReviewId} |
-| Generate a signed URL for image upload | POST | https://iyho77q7o7.execute-api.us-east-1.amazonaws.com/dev/review/{foodReviewId}/attachment |
+| Get food reviews per user | GET | https://{foodApiId}.execute-api.us-east-1.amazonaws.com/dev/myreview |
+| Get all food reviews | GET | https://{foodApiId}.execute-api.us-east-1.amazonaws.com/dev/review/ |
+| Get a food review by ID | GET | https://{foodApiId}.execute-api.us-east-1.amazonaws.com/dev/review/{foodReviewId} |
+| Post a food review | POST | https://{foodApiId}.execute-api.us-east-1.amazonaws.com/dev/review |
+| Update a food review | PATCH | https://{foodApiId}.execute-api.us-east-1.amazonaws.com/dev/review/{foodReviewId} |
+| Delete a food review | DELETE | https://{foodApiId}.execute-api.us-east-1.amazonaws.com/dev/review/{foodReviewId} |
+| Generate a signed URL for image upload | POST | https://{foodApiId}.execute-api.us-east-1.amazonaws.com/dev/review/{foodReviewId}/attachment |
 
 ### For favorites
 
 | Functionality | Method | Endpoint |
 |---|---|---|
-| Get favorites per user | GET | https://iyho77q7o7.execute-api.us-east-1.amazonaws.com/dev/favorite |
-| Post a favorite | POST | https://iyho77q7o7.execute-api.us-east-1.amazonaws.com/dev/favorite/{foodReviewId} |
-| Delete a favorite| DELETE | https://iyho77q7o7.execute-api.us-east-1.amazonaws.com/dev/favorite/{foodReviewId} |
+| Get favorites per user | GET | https://{foodApiId}.execute-api.us-east-1.amazonaws.com/dev/favorite |
+| Post a favorite | POST | https://{foodApiId}.execute-api.us-east-1.amazonaws.com/dev/favorite/{foodReviewId} |
+| Delete a favorite| DELETE | https://{foodApiId}.execute-api.us-east-1.amazonaws.com/dev/favorite/{foodReviewId} |
 
 ## Lambda functions
 
