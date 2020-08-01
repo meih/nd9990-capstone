@@ -168,7 +168,6 @@ export default {
   },
   methods: {
     async getFoodReviewItems() {
-    console.log("fav: " + this.favoriteOnly)
       if (this.$auth.loggedIn) {
         try {
           this.items = await getFoodReviews(

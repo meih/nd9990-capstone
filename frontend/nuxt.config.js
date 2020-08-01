@@ -78,6 +78,9 @@ export default {
       }
     }
   },
+  env: {
+    FOOD_API_ID: process.env.FOOD_API_ID
+  },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
