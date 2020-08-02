@@ -112,5 +112,12 @@ export default {
   ** See https://nuxtjs.org/api/configuration-build/
   */
   build: {
+    terser: {
+      terserOptions: {
+        compress: {
+          drop_console: true
+        }
+      }
+    }
   }
 }
